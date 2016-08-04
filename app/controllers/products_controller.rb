@@ -5,7 +5,11 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    # @q = Product.ransack(params[:q])
+    # @q = Product.ransack(params[:q].try(:merge, m: 'or'))
+    @q = Product.ransack(params[:q].try(:merge, m: params[:combinator]))
+    @products = @q.result
+    # @products = Product.all
   end
 
   # GET /products/1
